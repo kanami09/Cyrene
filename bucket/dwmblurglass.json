@@ -1,0 +1,35 @@
+{
+    "version": "2.3.1r",
+    "description": "为全局系统标题栏添加自定义效果，支持Windows 10和Windows 11。",
+    "homepage": "https://github.com/Maplespe/DWMBlurGlass",
+    "license": "LGPL-3.0-or-later | GPL-3.0-or-later",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Maplespe/DWMBlurGlass/releases/download/2.3.1r/DWMBlurGlass_2.3.1_x64.zip",
+            "hash": "cfda271d28f0fd9bda4978bd8bd793e31957632c5ca442441de9701c47f6707e"
+        }
+    },
+    "extract_dir": "Release",
+    "pre_install": "if (!(Test-Path \"$dir/data/config.ini\")) { New-Item \"$dir/data/config.ini\" -ItemType File | Out-Null }",
+    "shortcuts": [
+        [
+            "DWMBlurGlassGUI.exe",
+            "DWMBlurGlassGUI"
+        ]
+    ],
+    "persist": [
+        "data/config.ini",
+        "data/symbols"
+    ],
+    "checkver": {
+        "github": "https://github.com/Maplespe/DWMBlurGlass",
+        "regex": "releases/tag/([\\d.]+r?)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Maplespe/DWMBlurGlass/releases/download/$version/DWMBlurGlass_$matchHead_x64.zip"
+            }
+        }
+    }
+}
