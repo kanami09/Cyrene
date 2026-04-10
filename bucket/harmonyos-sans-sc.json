@@ -43,9 +43,7 @@
             "}"
         ]
     },
-    "post_install": [
-        "Remove-Item \"$dir/HarmonyOS+Sans+字体\" -Recurse -Force -ErrorAction SilentlyContinue"
-    ],
+    "post_install": "Remove-Item \"$dir/HarmonyOS+Sans+字体\" -Recurse -Force -ErrorAction SilentlyContinue",
     "pre_uninstall": [
         "$fontInstallDir = if ($global) { \"$env:windir\\Fonts\" } else { \"$env:LOCALAPPDATA\\Microsoft\\Windows\\Fonts\" }",
         "$registryRoot = if ($global) { 'HKLM' } else { 'HKCU' }",
@@ -94,9 +92,9 @@
             "$card = $node.vueAppComponentRawValue.CardList.rawValue | Where-Object { $_.cardTitle.value -eq 'HarmonyOS Sans 字体' } | Select-Object -First 1",
             "\"$($card.Download.rawValue[0].Date.value -replace '/', '') $($card.Download.rawValue[0].Link.href)\""
         ],
-        "regex": "(?<version>\\d+)\\s+https://(?<url>\\S+)"
+        "regex": "(?<version>\\d+)\\s+https://alliance-communityfile-drcn\\.dbankcdn\\.com/(?<url>\\S+)"
     },
     "autoupdate": {
-        "url": "https://$matchUrl#/HarmonyOS_Sans.zip"
+        "url": "https://alliance-communityfile-drcn.dbankcdn.com/$matchUrl#/HarmonyOS_Sans.zip"
     }
 }
