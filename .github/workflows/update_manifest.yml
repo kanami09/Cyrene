@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 4 * * *"
+
+name: Update Manifest
+
+jobs:
+  update:
+    name: Update
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Update Noto Sans SC
+        run: scripts/Update-NotoSansSC.ps1
+        shell: pwsh
+
+      - name: Commit Noto Sans SC Update
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "noto-sans-sc: update to version ${{ env.NOTO_SANS_SC_VERSION }}"
+          file_pattern: bucket/noto-sans-sc.json
