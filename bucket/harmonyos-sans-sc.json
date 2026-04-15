@@ -1,11 +1,11 @@
 {
-    "version": "20250923",
+    "version": "2.400",
     "description": "HarmonyOS Sans 字体（简体中文）",
     "homepage": "https://developer.huawei.com/consumer/cn/design/resource/",
     "license": "Unknown",
-    "url": "https://alliance-communityfile-drcn.dbankcdn.com/FileServer/getFile/cmtyManage/011/111/111/0000000000011111111.20251218140934.53495826757772194907330661120530:50001231000000:2800:4C6B270E72171539BE152974FA4BAB1C2C63CB46549E9DC13D66B6F2BBC574CA.zip?needInitFileName=true#/HarmonyOS_Sans.zip",
-    "hash": "4f46aae52ca67b4dcb5dd6723536aee2ddc26dd671bee719bc50fb9c867625ee",
-    "extract_dir": "HarmonyOS+Sans+字体/HarmonyOS Sans 字体/HarmonyOS_SansSC",
+    "url": "https://github.com/kanami09/HarmonyOS-Sans-Font/releases/download/v2.400/HarmonyOS-Sans-2.400.zip",
+    "hash": "c5e955a85d25ebdae8918c93ef180074e10dd8197a5e23857d08c0481c5b595b",
+    "extract_dir": "HarmonyOS_SansSC",
     "installer": {
         "script": [
             "$currentBuildNumber = [int] (Get-ItemProperty 'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion').CurrentBuildNumber",
@@ -43,7 +43,6 @@
             "}"
         ]
     },
-    "post_install": "Remove-Item \"$dir/HarmonyOS+Sans+字体\" -Recurse -Force -ErrorAction SilentlyContinue",
     "pre_uninstall": [
         "$fontInstallDir = if ($global) { \"$env:windir\\Fonts\" } else { \"$env:LOCALAPPDATA\\Microsoft\\Windows\\Fonts\" }",
         "$registryRoot = if ($global) { 'HKLM' } else { 'HKCU' }",
@@ -85,16 +84,9 @@
         ]
     },
     "checkver": {
-        "script": [
-            "$r = (Invoke-WebRequest 'https://developer.huawei.com/consumer/cn/design/resource/').Content",
-            "$j = [uri]::UnescapeDataString(([regex]::Match($r, 'decodeURIComponent\\(\"([^\"]+)\"\\)')).Groups[1].Value) | ConvertFrom-Json",
-            "$node = $j.children | Where-Object { $_.vueAppComponentRawValue.Title.value -eq '通用设计' } | Select-Object -First 1",
-            "$card = $node.vueAppComponentRawValue.CardList.rawValue | Where-Object { $_.cardTitle.value -eq 'HarmonyOS Sans 字体' } | Select-Object -First 1",
-            "\"$($card.Download.rawValue[0].Date.value -replace '/', '') $($card.Download.rawValue[0].Link.href)\""
-        ],
-        "regex": "(?<version>\\d+)\\s+https://alliance-communityfile-drcn\\.dbankcdn\\.com/(?<url>\\S+)"
+        "github": "https://github.com/kanami09/HarmonyOS-Sans-Font"
     },
     "autoupdate": {
-        "url": "https://alliance-communityfile-drcn.dbankcdn.com/$matchUrl#/HarmonyOS_Sans.zip"
+        "url": "https://github.com/kanami09/HarmonyOS-Sans-Font/releases/download/v2.400/HarmonyOS-Sans-$version.zip"
     }
 }
