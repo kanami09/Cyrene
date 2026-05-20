@@ -1,12 +1,12 @@
 {
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "重定向GitHub Copilot的流量到自定义URL。",
     "homepage": "https://github.com/kanami09/Copilot-Proxy",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/kanami09/Copilot-Proxy/releases/download/v0.2.2/CopilotProxy-v0.2.2-windows-x64.zip",
-            "hash": "235652779d37d48cdce958ba61f3d48059eb6010ae2e5f7c604fbd5630d459e5"
+            "url": "https://github.com/kanami09/Copilot-Proxy/releases/download/v0.2.3/CopilotProxy-v0.2.3-windows-x64.zip",
+            "hash": "75d41356a8b3535edac27eba6101348987899e8e0f02279db055c5f73fa01443"
         }
     },
     "pre_install": "if (!(Test-Path \"$dir/config.toml\")) { New-Item \"$dir/config.toml\" -ItemType File | Out-Null }",
