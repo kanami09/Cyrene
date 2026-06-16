@@ -5,7 +5,6 @@
     "license": "Unknown",
     "url": "https://github.com/kanami09/HarmonyOS-Sans-Font/releases/download/v2.400/HarmonyOS-Sans-2.400.zip",
     "hash": "c5e955a85d25ebdae8918c93ef180074e10dd8197a5e23857d08c0481c5b595b",
-    "extract_dir": "HarmonyOS_SansSC",
     "installer": {
         "script": [
             "$currentBuildNumber = [int] (Get-ItemProperty 'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion').CurrentBuildNumber",
