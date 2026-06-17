@@ -86,6 +86,6 @@
         "github": "https://github.com/kanami09/HarmonyOS-Sans-Font"
     },
     "autoupdate": {
-        "url": "https://github.com/kanami09/HarmonyOS-Sans-Font/releases/download/v2.400/HarmonyOS-Sans-$version.zip"
+        "url": "https://github.com/kanami09/HarmonyOS-Sans-Font/releases/download/v$version/HarmonyOS-Sans-$version.zip"
     }
 }
