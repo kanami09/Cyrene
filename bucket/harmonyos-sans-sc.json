@@ -1,10 +1,10 @@
 {
-    "version": "2.400",
+    "version": "2.040",
     "description": "HarmonyOS Sans 字体（简体中文）",
     "homepage": "https://developer.huawei.com/consumer/cn/design/resource/",
     "license": "Unknown",
-    "url": "https://github.com/kanami09/HarmonyOS-Sans-Font/releases/download/v2.400/HarmonyOS-Sans-2.400.zip",
-    "hash": "c5e955a85d25ebdae8918c93ef180074e10dd8197a5e23857d08c0481c5b595b",
+    "url": "https://github.com/kanami09/HarmonyOS-Sans-Font/releases/download/v2.040/HarmonyOS-Sans-2.040.zip",
+    "hash": "8301f812fa1adf5622521719d3284bd08d30ffefb74b2507dbdea5ed9e07ff53",
     "installer": {
         "script": [
             "$currentBuildNumber = [int] (Get-ItemProperty 'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion').CurrentBuildNumber",
