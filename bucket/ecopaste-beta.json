@@ -1,5 +1,5 @@
 {
-    "version": "1.1.1-nightly.20260724.1",
+    "version": "1.1.1-nightly.20260813.1",
     "description": "🎉跨平台的剪贴板管理工具",
     "homepage": "https://ecopaste.cn/",
     "license": "Apache-2.0",
@@ -9,12 +9,12 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://github.com/EcoPasteHub/EcoPaste/releases/download/v1.1.1-nightly.20260724.1/EcoPaste_1.1.1-nightly.20260724.1_x64-setup.exe#/dl.7z",
-            "hash": "9168258bfbd2f3545c4cfe658b457c95917decd095232156eece5416e9ae7a1c"
+            "url": "https://github.com/EcoPasteHub/EcoPaste/releases/download/v1.1.1-nightly.20260813.1/EcoPaste_1.1.1-nightly.20260813.1_x64-setup.exe#/dl.7z",
+            "hash": "81a8681bdcfa375b99fe44df85c629d8ab1e4dcdba535bcd81c32b653ac04d71"
         },
         "arm64": {
-            "url": "https://github.com/EcoPasteHub/EcoPaste/releases/download/v1.1.1-nightly.20260724.1/EcoPaste_1.1.1-nightly.20260724.1_arm64-setup.exe#/dl.7z",
-            "hash": "9c2deaaa61ea628dd88ea61a61931d32d80d83588e9c550491f3cab4e94e71c6"
+            "url": "https://github.com/EcoPasteHub/EcoPaste/releases/download/v1.1.1-nightly.20260813.1/EcoPaste_1.1.1-nightly.20260813.1_arm64-setup.exe#/dl.7z",
+            "hash": "24652f51fb307b1114a5c50ca1799994f4a7006c36f0d0bb27d9ad9aca904bc8"
         }
     },
     "pre_install": [
