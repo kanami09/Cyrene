@@ -1,20 +1,20 @@
 {
-    "version": "1.27.1",
+    "version": "1.27.2",
     "description": "Windows 平台的 FRP GUI客户端。",
     "homepage": "https://github.com/koho/frpmgr",
     "license": "Apache-2.0",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/koho/frpmgr/releases/download/v1.27.1/frpmgr-1.27.1-x64.zip",
-            "hash": "acd546f0758f8765d9b088954039dc8844bdaea315fe2916d9ee2b3f03e08841"
+            "url": "https://github.com/koho/frpmgr/releases/download/v1.27.2/frpmgr-1.27.2-x64.zip",
+            "hash": "a95a8637ae25398d90e5b993058d046164ba40a547bb5aafc088ea6c081632df"
         },
         "32bit": {
-            "url": "https://github.com/koho/frpmgr/releases/download/v1.27.1/frpmgr-1.27.1-x86.zip",
-            "hash": "a97229dbaa0507a455e77902eb29a1c5c3b099a9747a3e670a4900d3eadbe98f"
+            "url": "https://github.com/koho/frpmgr/releases/download/v1.27.2/frpmgr-1.27.2-x86.zip",
+            "hash": "cfb1c26fe6b2cd034c75b5d270c52fe82f512589a8c8be28fd78b339b2e6cd68"
         },
         "arm64": {
-            "url": "https://github.com/koho/frpmgr/releases/download/v1.27.1/frpmgr-1.27.1-arm64.zip",
-            "hash": "32bb7894ddb6f4aefa7b7bc90a73e46768525b0cf15e9eb3d105d89f07dba656"
+            "url": "https://github.com/koho/frpmgr/releases/download/v1.27.2/frpmgr-1.27.2-arm64.zip",
+            "hash": "c99a873b28b2f4ee20d6cbf8c0b87f686eab8f9e3303db86541d81b147b5ce8f"
         }
     },
     "pre_install": "if (!(Test-Path \"$dir/app.json\")) { New-Item \"$dir/app.json\" -ItemType File | Out-Null }",
