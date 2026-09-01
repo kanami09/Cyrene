@@ -1,10 +1,10 @@
 {
-    "version": "3.1.0.0",
+    "version": "3.2.0.0",
     "description": "一款体积小巧的鼠标点击器。",
     "homepage": "https://github.com/lalakii/MouseClickTool",
     "license": "Unknown",
-    "url": "https://github.com/lalakii/MouseClickTool/releases/download/3.1.0.0/MouseClickTool.exe",
-    "hash": "7d516f083993cf4ce503a1d105ba97748d31d9fe70fbe0037b043e3761b9d55c",
+    "url": "https://github.com/lalakii/MouseClickTool/releases/download/3.2.0.0/MouseClickTool.exe",
+    "hash": "8ed89e7f6f8d6d4a41790a50cdbfc32f2b5ee16bc11e239066bc496a72e14aa2",
     "shortcuts": [
         [
             "MouseClickTool.exe",
