@@ -17,7 +17,13 @@
             "hash": "c99a873b28b2f4ee20d6cbf8c0b87f686eab8f9e3303db86541d81b147b5ce8f"
         }
     },
-    "pre_install": "if (!(Test-Path \"$dir/app.json\")) { New-Item \"$dir/app.json\" -ItemType File | Out-Null }",
+    "pre_install": [
+        "$cfg = if (Test-Path \"$persist_dir/app.json\") { \"$persist_dir/app.json\" } else { \"$dir/app.json\" }",
+        "$raw = if (Test-Path $cfg) { Get-Content $cfg -Raw } else { '' }",
+        "$json = if ($raw -and $raw.Trim()) { $raw | ConvertFrom-Json } else { [PSCustomObject]@{} }",
+        "$json | Add-Member -MemberType NoteProperty -Name 'checkUpdate' -Value $false -Force",
+        "[System.IO.File]::WriteAllText($cfg, ($json | ConvertTo-Json -Depth 10), (New-Object System.Text.UTF8Encoding $false))"
+    ],
     "shortcuts": [
         [
             "frpmgr.exe",
