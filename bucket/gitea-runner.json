@@ -1,0 +1,33 @@
+{
+    "version": "4.0.0",
+    "description": "Gitea Actions 的官方 Runner。",
+    "homepage": "https://gitea.com/gitea/runner",
+    "license": "MIT",
+    "notes": [
+        "注册文件 .runner 默认保存在执行命令时的工作目录中，请在固定目录下运行 register 和 daemon。",
+        "可通过 'gitea-runner config init' 生成 config.yaml，并使用 'gitea-runner -c config.yaml daemon' 启动。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://gitea.com/gitea/runner/releases/download/v4.0.0/gitea-runner-4.0.0-windows-amd64.exe#/gitea-runner.exe",
+            "hash": "b68ce886336e420f8cbf5dcd86fb3cf7ddf847cb23f9ec9f497ad2ec4fb1a711"
+        }
+    },
+    "bin": "gitea-runner.exe",
+    "checkver": {
+        "url": "https://gitea.com/api/v1/repos/gitea/runner/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "v([\\d.]+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://gitea.com/gitea/runner/releases/download/v$version/gitea-runner-$version-windows-amd64.exe#/gitea-runner.exe"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/checksums.txt",
+            "regex": "$sha256\\s+$basename"
+        }
+    }
+}
