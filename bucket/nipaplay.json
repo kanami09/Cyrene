@@ -1,0 +1,105 @@
+{
+    "version": "1.11.9",
+    "description": "现代化的跨平台本地弹幕视频播放器，支持多格式字幕、多音轨切换、新番查看，可挂载 Emby/Jellyfin 媒体库。",
+    "homepage": "https://github.com/AimesSoft/NipaPlay-Reload",
+    "license": "MIT",
+    "suggest": {
+        "vcredist": "extras/vcredist2022"
+    },
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/AimesSoft/NipaPlay-Reload/releases/download/v1.11.9/NipaPlay_1.11.9_Windows_x64.zip",
+            "hash": "b208b66def2fea61cd4df62811a15ec2b12a5e6cf54bf3c0220ec38b41964485",
+            "extract_dir": "NipaPlay_1.11.9_Windows_x64"
+        }
+    },
+    "post_install": [
+        "if ($global) {",
+        "    warn 'NipaPlay 的数据位于用户目录，全局安装时不会接管到 persist 目录。'",
+        "} elseif (Get-Process -Name NipaPlay -ErrorAction SilentlyContinue) {",
+        "    warn 'NipaPlay 正在运行，已跳过数据迁移。请关闭后执行 scoop update nipaplay -f 重试。'",
+        "} else {",
+        "    @(",
+        "        @{ Link = Join-Path ([Environment]::GetFolderPath('ApplicationData')) 'com.aimessoft\\NipaPlay'; Target = \"$persist_dir\\appdata\" },",
+        "        @{ Link = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'nipaplay'; Target = \"$persist_dir\\documents\" }",
+        "    ) | ForEach-Object {",
+        "        $link = $_.Link",
+        "        $target = [System.IO.Path]::GetFullPath($_.Target)",
+        "        $item = Get-Item -LiteralPath $link -Force -ErrorAction SilentlyContinue",
+        "        if ($item.LinkType) {",
+        "            $current = [System.IO.Path]::GetFullPath([string]$item.Target)",
+        "            if ($current.TrimEnd('\\') -ne $target.TrimEnd('\\')) { warn \"$link 已是指向 $current 的链接，跳过。\" }",
+        "            return",
+        "        }",
+        "        if ($item) {",
+        "            if (Get-ChildItem -LiteralPath $link -Recurse -Force -File -ErrorAction SilentlyContinue | Select-Object -First 1) {",
+        "                if (Get-ChildItem -LiteralPath $target -Recurse -Force -File -ErrorAction SilentlyContinue | Select-Object -First 1) {",
+        "                    warn \"$link 与 $target 中都有数据，已跳过。请手动合并到后者并删除前者，再执行 scoop update nipaplay -f。\"",
+        "                    return",
+        "                }",
+        "                robocopy $link $target /E /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null",
+        "                if ($LASTEXITCODE -ge 8) {",
+        "                    Get-ChildItem -LiteralPath $target -Force | Remove-Item -Recurse -Force",
+        "                    warn \"迁移 $link 失败，已保留原数据。\"",
+        "                    return",
+        "                }",
+        "                info \"已将 $link 迁移至 $target\"",
+        "            }",
+        "            Remove-Item -LiteralPath $link -Recurse -Force",
+        "        } else {",
+        "            New-Item -ItemType Directory -Path (Split-Path $link) -Force | Out-Null",
+        "        }",
+        "        New-Item -ItemType Junction -Path $link -Target $target | Out-Null",
+        "    }",
+        "}",
+        "$prefs = Join-Path ([Environment]::GetFolderPath('ApplicationData')) 'com.aimessoft\\NipaPlay\\shared_preferences.json'",
+        "$entry = '\"flutter.auto_check_updates_in_background\":false'",
+        "$pattern = '\"flutter\\.auto_check_updates_in_background\"\\s*:\\s*(true|false)'",
+        "$raw = if (Test-Path $prefs) { [System.IO.File]::ReadAllText($prefs).Trim() } else { '' }",
+        "if ($raw -match $pattern) { $raw = $raw -replace $pattern, $entry }",
+        "elseif (-not $raw -or $raw -match '^\\{\\s*\\}$') { $raw = \"{$entry}\" }",
+        "elseif ($raw.StartsWith('{')) { $raw = $raw -replace '^\\{', \"{$entry,\" }",
+        "else { $raw = $null }",
+        "if ($raw) {",
+        "    New-Item -ItemType Directory -Path (Split-Path $prefs) -Force | Out-Null",
+        "    [System.IO.File]::WriteAllText($prefs, $raw, (New-Object System.Text.UTF8Encoding $false))",
+        "}"
+    ],
+    "uninstaller": {
+        "script": [
+            "if ($cmd -eq 'uninstall' -and !$global) {",
+            "    $persistRoot = [System.IO.Path]::GetFullPath($persist_dir).TrimEnd('\\') + '\\'",
+            "    @(",
+            "        (Join-Path ([Environment]::GetFolderPath('ApplicationData')) 'com.aimessoft\\NipaPlay'),",
+            "        (Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'nipaplay')",
+            "    ) | ForEach-Object {",
+            "        $item = Get-Item -LiteralPath $_ -Force -ErrorAction SilentlyContinue",
+            "        if ($item.LinkType -and [System.IO.Path]::GetFullPath([string]$item.Target).StartsWith($persistRoot, [System.StringComparison]::OrdinalIgnoreCase)) {",
+            "            [System.IO.Directory]::Delete($_)",
+            "        }",
+            "    }",
+            "    try { [System.IO.Directory]::Delete((Join-Path ([Environment]::GetFolderPath('ApplicationData')) 'com.aimessoft')) } catch {}",
+            "    if (!$purge) { info \"NipaPlay 的数据仍保留在 $persist_dir\" }",
+            "}"
+        ]
+    },
+    "shortcuts": [
+        [
+            "NipaPlay.exe",
+            "NipaPlay"
+        ]
+    ],
+    "persist": [
+        "appdata",
+        "documents"
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/AimesSoft/NipaPlay-Reload/releases/download/v$version/NipaPlay_$version_Windows_x64.zip",
+                "extract_dir": "NipaPlay_$version_Windows_x64"
+            }
+        }
+    }
+}
