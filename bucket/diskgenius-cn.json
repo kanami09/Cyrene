@@ -1,0 +1,45 @@
+{
+    "version": "6.2.0.1829",
+    "description": "集数据恢复、分区管理、备份还原等功能于一身的磁盘工具（简体中文版）。",
+    "homepage": "https://www.diskgenius.cn",
+    "license": "Shareware",
+    "architecture": {
+        "64bit": {
+            "url": "https://download_cn.eassos.com/DG6201829_x64.zip",
+            "hash": "88a489db17b52bb79c13f3f47b47514995ef3d9aec6acef11db48088072c5936"
+        },
+        "32bit": {
+            "url": "https://download_cn.eassos.com/DG6201829_x86.zip",
+            "hash": "7dae6fc3eb19bfa74f03603ee95c34e7394e23e8503d7df7df070f1e7ffb086d"
+        }
+    },
+    "extract_dir": "DiskGenius",
+    "pre_install": "if (!(Test-Path \"$persist_dir\\Options.ini\")) { New-Item \"$dir\\Options.ini\" | Out-Null }",
+    "bin": [
+        [
+            "DiskGenius.exe",
+            "diskgenius-cn"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "DiskGenius.exe",
+            "DiskGenius CN"
+        ]
+    ],
+    "persist": "Options.ini",
+    "checkver": {
+        "url": "https://www.diskgenius.cn/download.php",
+        "regex": "lk cur\">V([\\d.]+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://download_cn.eassos.com/DG$cleanVersion_x64.zip"
+            },
+            "32bit": {
+                "url": "https://download_cn.eassos.com/DG$cleanVersion_x86.zip"
+            }
+        }
+    }
+}
