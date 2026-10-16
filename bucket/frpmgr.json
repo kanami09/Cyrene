@@ -24,6 +24,17 @@
         "$json | Add-Member -MemberType NoteProperty -Name 'checkUpdate' -Value $false -Force",
         "[System.IO.File]::WriteAllText($cfg, ($json | ConvertTo-Json -Depth 10), (New-Object System.Text.UTF8Encoding $false))"
     ],
+    "pre_uninstall": [
+        "if ($cmd -eq 'uninstall') {",
+        "    $appRoot = (Split-Path $dir) + '\\'",
+        "    $services = @(Get-CimInstance Win32_Service -ErrorAction SilentlyContinue | Where-Object { $_.PathName -and $_.PathName.TrimStart('\"').StartsWith($appRoot, [System.StringComparison]::OrdinalIgnoreCase) })",
+        "    if ($services) {",
+        "        error \"以下服务仍在使用 FRP 管理器：$($services.DisplayName -join '、')\"",
+        "        error '请先在 FRP 管理器中停止这些配置（停止时会自动删除对应服务），再执行卸载。'",
+        "        exit 1",
+        "    }",
+        "}"
+    ],
     "shortcuts": [
         [
             "frpmgr.exe",
@@ -33,6 +44,7 @@
     "persist": [
         "logs",
         "profiles",
+        "stores",
         "app.json"
     ],
     "checkver": "github",

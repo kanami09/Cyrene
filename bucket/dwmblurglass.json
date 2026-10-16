@@ -3,6 +3,7 @@
     "description": "为全局系统标题栏添加自定义效果，支持Windows 10和Windows 11。",
     "homepage": "https://github.com/Maplespe/DWMBlurGlass",
     "license": "LGPL-3.0-or-later | GPL-3.0-or-later",
+    "notes": "由于 DWM 运行在沙箱中，程序不能位于用户目录（%USERPROFILE%）下，否则会拒绝启动。若 Scoop 安装在用户目录下，请使用全局安装（scoop install -g）。",
     "architecture": {
         "64bit": {
             "url": "https://github.com/Maplespe/DWMBlurGlass/releases/download/2.3.1r/DWMBlurGlass_2.3.1_x64.zip",
@@ -11,6 +12,16 @@
     },
     "extract_dir": "Release",
     "pre_install": "if (!(Test-Path \"$dir/data/config.ini\")) { New-Item \"$dir/data/config.ini\" -ItemType File | Out-Null }",
+    "pre_uninstall": [
+        "if ($cmd -eq 'uninstall') {",
+        "    $appRoot = (Split-Path $dir) + '\\'",
+        "    $task = Get-ScheduledTask -TaskName 'DWMBlurGlass_Extend' -ErrorAction SilentlyContinue",
+        "    if ($task.Actions.Execute | Where-Object { $_ -and $_.Trim('\"').StartsWith($appRoot, [System.StringComparison]::OrdinalIgnoreCase) }) {",
+        "        error '计划任务 DWMBlurGlass_Extend 仍指向本程序，请先在 DWMBlurGlass 中点击“卸载”，再执行卸载。'",
+        "        exit 1",
+        "    }",
+        "}"
+    ],
     "shortcuts": [
         [
             "DWMBlurGlassGUI.exe",

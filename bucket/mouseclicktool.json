@@ -5,6 +5,11 @@
     "license": "Unknown",
     "url": "https://github.com/lalakii/MouseClickTool/releases/download/3.3.0.0/MouseClickTool.exe",
     "hash": "e4b07ea0a1cebc18e825c0ad3bc9bfdadbcb1b5b30e26cf05e00f5409da6bf60",
+    "post_uninstall": [
+        "if ($cmd -eq 'uninstall' -and $purge) {",
+        "    Get-ChildItem -LiteralPath ([Environment]::GetFolderPath('MyDocuments')) -Filter 'MouseClickTool_V*.ini' -File -Force -ErrorAction SilentlyContinue | Remove-Item -Force",
+        "}"
+    ],
     "shortcuts": [
         [
             "MouseClickTool.exe",

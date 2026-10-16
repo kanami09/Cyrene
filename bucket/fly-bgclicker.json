@@ -16,6 +16,10 @@
         "    $xml | Set-Content \"$dir/FLY BGClicker.exe.Config\" -Encoding UTF8",
         "}"
     ],
+    "pre_uninstall": [
+        "$cfg = Get-Item -LiteralPath \"$dir/FLY BGClicker.exe.Config\" -Force -ErrorAction SilentlyContinue",
+        "if ($cfg -and !$cfg.LinkType) { Copy-Item -LiteralPath $cfg.FullName \"$persist_dir/FLY BGClicker.exe.Config\" -Force }"
+    ],
     "shortcuts": [
         [
             "FLY BGClicker.exe",
