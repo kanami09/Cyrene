@@ -1,0 +1,64 @@
+{
+    "version": "2.0.0",
+    "description": "Minecraft 整合包汉化工具，支持本地 GGUF 模型与 API 翻译，涵盖任务、语言文件和手册，提供术语管理、译文审校、增量翻译及独立汉化补丁生成。（CPU 推理版）",
+    "homepage": "https://github.com/XDawned/MCPackLocalizer",
+    "license": "GPL-3.0-only",
+    "notes": [
+        "CPU、Vulkan、CUDA 三个后端版本共用设置与环境变量，只能安装其中一个。",
+        "程序内下载的模型保存在 $dir\\models（已持久化）。下载时记录的是版本目录路径，升级后会失效，需在本地模型接口中重新选择模型文件；选择 $dir\\models 下的文件可避免此问题。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/XDawned/MCPackLocalizer/releases/download/v2.0.0/MCPackLocalizer-2.0.0-win-x64-cpu.zip",
+            "hash": "4712851496ea6fa445dc9879e4134cd2a0e1e1969bd2097c205f4e2998b12542",
+            "extract_dir": "MCPackLocalizer-2.0.0-win-x64-cpu"
+        }
+    },
+    "pre_install": [
+        "$others = @('cpu', 'vulkan', 'cuda') | Where-Object { $_ -ne 'cpu' } | ForEach-Object { \"mcpacklocalizer-$_\" } | Where-Object { installed $_ }",
+        "if ($others) {",
+        "    Remove-Item -LiteralPath $dir -Recurse -Force",
+        "    $appDir = Split-Path $dir",
+        "    if (!(Get-ChildItem -LiteralPath $appDir -Force)) { Remove-Item -LiteralPath $appDir -Force }",
+        "    error \"MCPackLocalizer 的不同后端版本共用设置与环境变量，请先卸载 $($others -join '、') 再安装。\"",
+        "    exit 1",
+        "}"
+    ],
+    "env_set": {
+        "MPLT_DATA_DIR": "$persist_dir\\data",
+        "MPLT_CACHE_DIR": "$persist_dir\\cache"
+    },
+    "post_uninstall": [
+        "if ($cmd -eq 'uninstall') {",
+        "    if ($purge) {",
+        "        Remove-Item -LiteralPath 'HKCU:\\Software\\MCPackLocalizer\\Desktop' -Recurse -Force -ErrorAction SilentlyContinue",
+        "        $key = Get-Item -LiteralPath 'HKCU:\\Software\\MCPackLocalizer' -ErrorAction SilentlyContinue",
+        "        if ($key -and !$key.SubKeyCount -and !$key.ValueCount) { Remove-Item -LiteralPath $key.PSPath -Force }",
+        "    }",
+        "    $leftover = @(",
+        "        (Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'MCPackLocalizer'),",
+        "        (Join-Path $env:USERPROFILE 'MCPackLocalizer')",
+        "    ) | Where-Object { Test-Path -LiteralPath $_ }",
+        "    if ($leftover) { warn \"以下目录不由 Scoop 管理，未自动删除，如不再需要请手动清理：$($leftover -join '、')\" }",
+        "}"
+    ],
+    "shortcuts": [
+        [
+            "MCPackLocalizer.exe",
+            "MCPackLocalizer"
+        ]
+    ],
+    "persist": "models",
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/XDawned/MCPackLocalizer/releases/download/v$version/MCPackLocalizer-$version-win-x64-cpu.zip",
+                "extract_dir": "MCPackLocalizer-$version-win-x64-cpu"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/MCPackLocalizer-$version-win-x64-cpu.sha256"
+        }
+    }
+}
