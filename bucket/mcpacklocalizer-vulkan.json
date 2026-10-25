@@ -1,5 +1,5 @@
 {
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Minecraft 整合包汉化工具，支持本地 GGUF 模型与 API 翻译，涵盖任务、语言文件和手册，提供术语管理、译文审校、增量翻译及独立汉化补丁生成。（Vulkan 推理版，推荐 AMD 显卡使用）",
     "homepage": "https://github.com/XDawned/MCPackLocalizer",
     "license": "GPL-3.0-only",
@@ -9,9 +9,9 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/XDawned/MCPackLocalizer/releases/download/v2.0.0/MCPackLocalizer-2.0.0-win-x64-vulkan.zip",
-            "hash": "41c8bbbe3decc8822166343ced30d388b19de3255d5b3a423318732da11b0fe4",
-            "extract_dir": "MCPackLocalizer-2.0.0-win-x64-vulkan"
+            "url": "https://github.com/XDawned/MCPackLocalizer/releases/download/v2.0.1/MCPackLocalizer-2.0.1-win-x64-vulkan.zip",
+            "hash": "7e02cabe541e1620bdda49097e38853cab73a3d58e0c8b0decb141bdc59afa84",
+            "extract_dir": "MCPackLocalizer-2.0.1-win-x64-vulkan"
         }
     },
     "pre_install": [
