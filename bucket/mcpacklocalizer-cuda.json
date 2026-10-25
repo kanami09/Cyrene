@@ -1,5 +1,5 @@
 {
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Minecraft 整合包汉化工具，支持本地 GGUF 模型与 API 翻译，涵盖任务、语言文件和手册，提供术语管理、译文审校、增量翻译及独立汉化补丁生成。（CUDA 推理版，需要驱动兼容 CUDA 12.4 的 NVIDIA 显卡）",
     "homepage": "https://github.com/XDawned/MCPackLocalizer",
     "license": "GPL-3.0-only",
@@ -9,9 +9,9 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/XDawned/MCPackLocalizer/releases/download/v2.0.0/MCPackLocalizer-2.0.0-win-x64-cuda.zip",
-            "hash": "3735e36d9ec0c57cbfa24b50e4b5d0d066eb4584b576a97ab826a8b5f5574db5",
-            "extract_dir": "MCPackLocalizer-2.0.0-win-x64-cuda"
+            "url": "https://github.com/XDawned/MCPackLocalizer/releases/download/v2.0.1/MCPackLocalizer-2.0.1-win-x64-cuda.zip",
+            "hash": "9aac51891f8234ae1a73fe8977fa149ceb316732d5a01705ebc928ab72dfc976",
+            "extract_dir": "MCPackLocalizer-2.0.1-win-x64-cuda"
         }
     },
     "pre_install": [
