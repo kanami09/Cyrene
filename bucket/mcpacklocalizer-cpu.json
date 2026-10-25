@@ -1,5 +1,5 @@
 {
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Minecraft 整合包汉化工具，支持本地 GGUF 模型与 API 翻译，涵盖任务、语言文件和手册，提供术语管理、译文审校、增量翻译及独立汉化补丁生成。（CPU 推理版）",
     "homepage": "https://github.com/XDawned/MCPackLocalizer",
     "license": "GPL-3.0-only",
@@ -9,9 +9,9 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/XDawned/MCPackLocalizer/releases/download/v2.0.0/MCPackLocalizer-2.0.0-win-x64-cpu.zip",
-            "hash": "4712851496ea6fa445dc9879e4134cd2a0e1e1969bd2097c205f4e2998b12542",
-            "extract_dir": "MCPackLocalizer-2.0.0-win-x64-cpu"
+            "url": "https://github.com/XDawned/MCPackLocalizer/releases/download/v2.0.1/MCPackLocalizer-2.0.1-win-x64-cpu.zip",
+            "hash": "8ed297c4695a6071a9b848b89d1f601daa3ec5b8f41ed043c936d9ee852800e4",
+            "extract_dir": "MCPackLocalizer-2.0.1-win-x64-cpu"
         }
     },
     "pre_install": [
