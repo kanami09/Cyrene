@@ -1,5 +1,5 @@
 {
-    "version": "1.11.10",
+    "version": "1.11.11",
     "description": "现代化的跨平台本地弹幕视频播放器，支持多格式字幕、多音轨切换、新番查看，可挂载 Emby/Jellyfin 媒体库。",
     "homepage": "https://github.com/AimesSoft/NipaPlay-Reload",
     "license": "MIT",
@@ -8,9 +8,9 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://github.com/AimesSoft/NipaPlay-Reload/releases/download/v1.11.10/NipaPlay_1.11.10_Windows_x64.zip",
-            "hash": "fcbf324d2fe37bc8912d39121ee9ebe3ee558af76778084eca571922fb6fc3dd",
-            "extract_dir": "NipaPlay_1.11.10_Windows_x64"
+            "url": "https://github.com/AimesSoft/NipaPlay-Reload/releases/download/v1.11.11/NipaPlay_1.11.11_Windows_x64.zip",
+            "hash": "204fd82f86404acc0818e654fd758a188d3417556fb1e0747ca55dcb6d747a7d",
+            "extract_dir": "NipaPlay_1.11.11_Windows_x64"
         }
     },
     "post_install": [
