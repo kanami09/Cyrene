@@ -1,5 +1,5 @@
 {
-    "version": "5.3.0",
+    "version": "5.4.0",
     "description": "Gitea Actions 的官方 Runner。",
     "homepage": "https://gitea.com/gitea/runner",
     "license": "MIT",
@@ -9,8 +9,8 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://gitea.com/gitea/runner/releases/download/v5.3.0/gitea-runner-5.3.0-windows-amd64.exe#/gitea-runner.exe",
-            "hash": "0feec9369c3f8e6c080845fe4c968ef3b3a6ca9022a59a38806c87c772d692d7"
+            "url": "https://gitea.com/gitea/runner/releases/download/v5.4.0/gitea-runner-5.4.0-windows-amd64.exe#/gitea-runner.exe",
+            "hash": "844d548908b87e99cc03778e43d14730ec62f01074ccb86cafd7d1cb085cd0bf"
         }
     },
     "bin": "gitea-runner.exe",
