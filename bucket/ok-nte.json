@@ -1,0 +1,120 @@
+{
+    "version": "1.5.3",
+    "description": "《异环》开源自动化工具，支持后台运行、日常任务、自动战斗和 MIDI 弹琴。",
+    "homepage": "https://github.com/BnanZ0/ok-nte",
+    "license": "GPL-3.0-only",
+    "notes": [
+        "使用不含更新启动器的便携包，通过 scoop update ok-nte 升级。",
+        "更新或卸载前请关闭 OK-NTE。全局安装的临时文件清理仅针对执行卸载的用户，用户主动导出的文件不会删除。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/BnanZ0/ok-nte/releases/download/v1.5.3/ok-nte-win-x86_64-v1.5.3-body.zip",
+            "hash": "b728236bcb5a6b921152c985f0e8a8575cd3963d86808bc8c08b4e8e6391a9ed"
+        }
+    },
+    "pre_install": [
+        "$ErrorActionPreference = 'Stop'",
+        "$library = Join-Path $persist_dir 'mid_lib'",
+        "$public = [System.IO.Path]::GetFullPath(\"$dir/mid_lib/public\").TrimEnd('\\') + '\\'",
+        "if ((Test-Path -LiteralPath $library -PathType Container) -and (Test-Path -LiteralPath $public -PathType Container)) {",
+        "    foreach ($file in Get-ChildItem -LiteralPath $public -File -Recurse) {",
+        "        $target = Join-Path (Join-Path $library 'public') $file.FullName.Substring($public.Length)",
+        "        if (!(Test-Path -LiteralPath $target)) {",
+        "            New-Item -ItemType Directory -Path (Split-Path $target) -Force | Out-Null",
+        "            Copy-Item -LiteralPath $file.FullName -Destination $target",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "pre_uninstall": [
+        "$ErrorActionPreference = 'Stop'",
+        "$app_root = [System.IO.Path]::GetFullPath((Split-Path $dir)).TrimEnd('\\') + '\\'",
+        "function Get-OkNtePath([string]$path) {",
+        "    if ([string]::IsNullOrWhiteSpace($path)) { return $null }",
+        "    $path = [Environment]::ExpandEnvironmentVariables($path.Trim('\"'))",
+        "    if ($path -notmatch '^(?:[a-zA-Z]:[\\\\/]|\\\\\\\\[^\\\\/]+[\\\\/][^\\\\/]+[\\\\/])') { return $null }",
+        "    try { return [System.IO.Path]::GetFullPath($path) } catch { return $null }",
+        "}",
+        "function Test-OkNtePath([string]$path) {",
+        "    $normalized = Get-OkNtePath $path",
+        "    return $normalized -and $normalized.StartsWith($app_root, [System.StringComparison]::OrdinalIgnoreCase)",
+        "}",
+        "$processes = @(Get-CimInstance Win32_Process | Where-Object {",
+        "    (Test-OkNtePath $_.ExecutablePath) -or (!$_.ExecutablePath -and $_.Name -eq 'ok-nte.exe')",
+        "})",
+        "if ($processes) { throw '请先关闭 OK-NTE 再重试更新或卸载；如其他安装的同名进程路径不可读，请使用有权限的终端重试。' }",
+        "if (!(Get-Command Get-ScheduledTask -ErrorAction SilentlyContinue)) { Import-Module \"$env:WINDIR/System32/WindowsPowerShell/v1.0/Modules/ScheduledTasks/ScheduledTasks.psd1\" }",
+        "$tasks = @(Get-ScheduledTask | Where-Object { $_.TaskPath -eq '\\ok-nte\\' })",
+        "$removed_task = $false",
+        "foreach ($task in $tasks) {",
+        "    $actions = @($task.Actions)",
+        "    if (!$actions.Count -or @($actions | Where-Object { !(Test-OkNtePath $_.Execute) }).Count) { continue }",
+        "    if ($cmd -eq 'uninstall') {",
+        "        Unregister-ScheduledTask -InputObject $task -Confirm:$false | Out-Null",
+        "        $removed_task = $true",
+        "    } else {",
+        "        $changed = $false",
+        "        foreach ($action in $actions) {",
+        "            foreach ($property in @('Execute', 'WorkingDirectory')) {",
+        "                if (Test-OkNtePath $action.$property) {",
+        "                    $relative = (Get-OkNtePath $action.$property).Substring($app_root.Length)",
+        "                    $separator = $relative.IndexOf('\\')",
+        "                    $suffix = if ($separator -ge 0) { $relative.Substring($separator) } else { '' }",
+        "                    $target = $app_root + 'current' + $suffix",
+        "                    if ($action.$property -ne $target) { $action.$property = $target; $changed = $true }",
+        "                }",
+        "            }",
+        "        }",
+        "        if ($changed) { Set-ScheduledTask -InputObject $task | Out-Null }",
+        "    }",
+        "}",
+        "if ($removed_task) {",
+        "    try {",
+        "        $scheduler = New-Object -ComObject 'Schedule.Service'",
+        "        $scheduler.Connect()",
+        "        $folder = $scheduler.GetFolder('\\ok-nte')",
+        "        if (!$folder.GetTasks(1).Count -and !$folder.GetFolders(0).Count) { $scheduler.GetFolder('\\').DeleteFolder('ok-nte', 0) }",
+        "    } catch { warn \"无法清理空的 OK-NTE 计划任务文件夹：$($_.Exception.Message)\" }",
+        "}",
+        "if ($cmd -eq 'uninstall' -and $purge) {",
+        "    $temporary_root = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath()).TrimEnd('\\') + '\\'",
+        "    foreach ($file in Get-ChildItem -LiteralPath $temporary_root -Filter 'ok-script-*' -File) {",
+        "        if ($file.Name -notmatch '^ok-script-[0-9a-f]{32}\\.pid(?:\\.[0-9]+\\.tmp)?$' -or ($file.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) { continue }",
+        "        if (![System.IO.Path]::GetFullPath($file.FullName).StartsWith($temporary_root, [System.StringComparison]::OrdinalIgnoreCase)) { continue }",
+        "        try {",
+        "            $original = [System.IO.File]::ReadAllText($file.FullName)",
+        "            $owner = $original | ConvertFrom-Json",
+        "            if ((Test-OkNtePath $owner.executable) -and [System.IO.File]::ReadAllText($file.FullName) -ceq $original) {",
+        "                Remove-Item -LiteralPath $file.FullName -Force",
+        "            }",
+        "        } catch { warn \"已保留无法确认或清理的临时文件 $($file.FullName)：$($_.Exception.Message)\" }",
+        "    }",
+        "}"
+    ],
+    "shortcuts": [
+        [
+            "ok-nte.exe",
+            "OK-NTE"
+        ]
+    ],
+    "persist": [
+        "configs",
+        "custom_chars",
+        "gift_configs",
+        "mid_lib",
+        "ok_tasks",
+        "ok_import",
+        "ok_templates",
+        "logs",
+        "screenshots"
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/BnanZ0/ok-nte/releases/download/v$version/ok-nte-win-x86_64-v$version-body.zip"
+            }
+        }
+    }
+}
