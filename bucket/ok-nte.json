@@ -1,5 +1,5 @@
 {
-    "version": "1.5.4",
+    "version": "1.5.5",
     "description": "《异环》开源自动化工具，支持后台运行、日常任务、自动战斗和 MIDI 弹琴。",
     "homepage": "https://github.com/BnanZ0/ok-nte",
     "license": "GPL-3.0-only",
@@ -9,8 +9,8 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/BnanZ0/ok-nte/releases/download/v1.5.4/ok-nte-win-x86_64-v1.5.4-body.zip",
-            "hash": "62694bf761e83cbb1866a554cb54603f7044419cc58b65d896a02d7d4803b0aa"
+            "url": "https://github.com/BnanZ0/ok-nte/releases/download/v1.5.5/ok-nte-win-x86_64-v1.5.5-body.zip",
+            "hash": "b2c43fdd2269d06e2a1c4e1ecb68463833737a8da22aa4daa8aa22285bd53f14"
         }
     },
     "pre_install": [
