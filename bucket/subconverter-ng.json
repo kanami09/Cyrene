@@ -1,0 +1,45 @@
+{
+    "version": "0.16.0",
+    "description": "支持 Clash.Meta、sing-box、Surge 等格式的订阅转换工具，提供命令行和 Web 界面。",
+    "homepage": "https://github.com/Jungley8/subconverter-ng",
+    "license": "GPL-3.0-or-later",
+    "notes": [
+        "服务端配置文件位于 $persist_dir\\config\\config.yaml。",
+        "运行下方命令后，访问 http://127.0.0.1:25500/ 打开本机 Web 界面。",
+        "subconverter-ng serve --config \"$persist_dir\\config\\config.yaml\" --listen 127.0.0.1:25500",
+        "Web 界面的订阅库和表单存放在浏览器中，可通过浏览器清除该站点的数据。通过 -o 导出的文件由用户自行管理。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Jungley8/subconverter-ng/releases/download/v0.16.0/subconverter-ng_0.16.0_windows_amd64.zip",
+            "hash": "e660ec64287447f5d6fe79059344d0bbab4bb00cc5631c4212314a82d10c3b5d"
+        },
+        "arm64": {
+            "url": "https://github.com/Jungley8/subconverter-ng/releases/download/v0.16.0/subconverter-ng_0.16.0_windows_arm64.zip",
+            "hash": "06e2c45f7c11ac543fa68a865238b100047ed119c0e3b8c4e4746b25f2a6e887"
+        }
+    },
+    "pre_install": [
+        "if (!(Test-Path -LiteralPath \"$persist_dir/config\")) {",
+        "    New-Item -ItemType Directory -Path \"$dir/config\" -Force -ErrorAction Stop | Out-Null",
+        "    Copy-Item -LiteralPath \"$dir/config.example.yaml\" -Destination \"$dir/config/config.yaml\" -ErrorAction Stop",
+        "}"
+    ],
+    "bin": "subconverter-ng.exe",
+    "persist": "config",
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Jungley8/subconverter-ng/releases/download/v$version/subconverter-ng_$version_windows_amd64.zip"
+            },
+            "arm64": {
+                "url": "https://github.com/Jungley8/subconverter-ng/releases/download/v$version/subconverter-ng_$version_windows_arm64.zip"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/checksums.txt",
+            "regex": "$sha256\\s+$basename"
+        }
+    }
+}
